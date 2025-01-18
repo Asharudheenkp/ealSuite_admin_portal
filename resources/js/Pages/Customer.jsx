@@ -44,7 +44,7 @@ export default function Customer({ type }) {
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="container mx-auto p-6 bg-gray-50 min-h-screen">
+                        <div className="container mx-auto p-6 bg-gray-50">
                             <div className="flex items-center justify-between mb-6">
                                 <h1 className="text-3xl font-bold text-gray-800">
                                     Customer List
