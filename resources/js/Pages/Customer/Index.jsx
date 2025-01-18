@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Pagination from "@/Components/Pagination";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import Loader from "@/Components/Loader";
 
-export default function Customer({ type }) {
+export default function Index({ type }) {
     const [customers, setCustomers] = useState([]);
     const [paginationData, setPaginationData] = useState({});
     const [loading, setLoading] = useState(false);
@@ -49,14 +49,14 @@ export default function Customer({ type }) {
                                 <h1 className="text-3xl font-bold text-gray-800">
                                     Customer List
                                 </h1>
-                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
-                                    Add New Customer
-                                </button>
+                                <Link href={route('customer.create')} className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+                                    Create New Customer
+                                </Link>
                             </div>
 
                             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
                                 {loading ? (
-                                    <Loader/>
+                                    <Loader />
                                 ) : (
                                     <>
                                         {customers.length === 0 ? (
@@ -68,7 +68,9 @@ export default function Customer({ type }) {
                                                 <table className="table-auto w-full text-left border-collapse">
                                                     <thead className="bg-blue-600 text-white">
                                                         <tr>
-                                                            <th className="px-4 py-3">#</th>
+                                                            <th className="px-4 py-3">
+                                                                #
+                                                            </th>
                                                             <th className="px-4 py-3">
                                                                 Name
                                                             </th>
@@ -88,30 +90,44 @@ export default function Customer({ type }) {
                                                     </thead>
                                                     <tbody className="divide-y divide-gray-200">
                                                         {customers.map(
-                                                            (customer, index) => (
+                                                            (
+                                                                customer,
+                                                                index
+                                                            ) => (
                                                                 <tr
                                                                     className="hover:bg-gray-50"
-                                                                    key={customer.id}
+                                                                    key={
+                                                                        customer.id
+                                                                    }
                                                                 >
                                                                     <td className="px-4 py-3">
-                                                                        {index + 1}
+                                                                        {index +
+                                                                            1}
                                                                     </td>
                                                                     <td className="px-4 py-3 font-semibold text-gray-700">
-                                                                        {customer.name}
+                                                                        {
+                                                                            customer.name
+                                                                        }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        {customer.phone}
+                                                                        {
+                                                                            customer.phone
+                                                                        }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        {customer.email}
+                                                                        {
+                                                                            customer.email
+                                                                        }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        {customer.address}
+                                                                        {
+                                                                            customer.address
+                                                                        }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-center">
-                                                                        <button className="text-sm text-blue-500 hover:underline">
+                                                                        <Link href={route('customer.edit', customer.id)} className="text-sm text-blue-500 hover:underline">
                                                                             Edit
-                                                                        </button>
+                                                                        </Link>
                                                                     </td>
                                                                 </tr>
                                                             )

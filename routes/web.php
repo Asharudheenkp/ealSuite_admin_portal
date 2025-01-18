@@ -18,6 +18,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/customer', [CustomerController::class, 'index'])->name('customer');
+    Route::get('/customer/create', [CustomerController::class, 'create'])->name('customer.create');
+    Route::get('/customer/edit/{customer}', [CustomerController::class, 'edit'])->name('customer.edit');
+
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
 });
 
