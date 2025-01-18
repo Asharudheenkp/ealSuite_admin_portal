@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Constants\CustomerConstants;
+
 use App\Models\Invoice;
 use App\Models\Customer;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+
 class UserServices
 {
 
@@ -16,9 +20,9 @@ class UserServices
      * @param int $perPage
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|null
      */
-    public function getData($type, $perPage = 15)
+    public function getData($type, $perPage = CustomerConstants::PAGINATION)
     {
-        if ($type == 'customer') {
+        if ($type == CustomerConstants::TYPE) {
             return Customer::withCount('invoices')->paginate($perPage);
         } elseif ($type == 'invoice') {
             return Invoice::with('customer')->select('customer_id', 'date', 'amount', 'status')->paginate($perPage);
@@ -74,7 +78,7 @@ class UserServices
 
 
         if ($id) {
-            if ($type === 'customer') {
+            if ($type === CustomerConstants::TYPE) {
                 $rules['customer']['email'] = 'nullable|email|max:150|unique:customers,email,' . $id;
             } elseif ($type === 'invoice') {
                 $rules['invoice']['customer_id'] = 'required|exists:customers,id';
@@ -93,7 +97,7 @@ class UserServices
      */
     public function createData(array $input, $type)
     {
-        if ($type === 'customer') {
+        if ($type === CustomerConstants::TYPE) {
             return Customer::create([
                 'name' => $input['name'],
                 'phone' => array_key_exists('phone', $input) ? $input['phone'] : '',
@@ -124,7 +128,7 @@ class UserServices
     {
         $data = null;
 
-        if ($type === 'customer') {
+        if ($type === CustomerConstants::TYPE) {
             $data = Customer::find($id);
             if ($data) {
                 $data->update([

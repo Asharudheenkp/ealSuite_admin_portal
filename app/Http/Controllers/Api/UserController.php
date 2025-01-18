@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 
+use App\Constants\CustomerConstants;
+
 use App\Services\UserServices;
 
 use Illuminate\Http\Request;
@@ -31,7 +33,7 @@ class UserController extends Controller
      */
     public function getData(Request $request, $type)
     {
-        $perPage = $request->input('per_page', 15);
+        $perPage = $request->input('per_page', CustomerConstants::PAGINATION);
 
         $data = $this->userServices->getData($type, $perPage);
         if ($data === null) {
