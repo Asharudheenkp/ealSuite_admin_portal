@@ -6,7 +6,7 @@ import { Head, Link } from "@inertiajs/react";
 import Loader from "@/Components/Loader";
 import PrimaryButton from "@/Components/PrimaryButton";
 
-export default function Index({ type }) {
+export default function Index({ type, status }) {
     const [invoices, setInvoices] = useState([]);
     const [paginationData, setPaginationData] = useState({});
     const [loading, setLoading] = useState(false);
@@ -114,7 +114,7 @@ export default function Index({ type }) {
                                                                         {invoice.amount}
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        {invoice.status}
+                                                                       <span className={``}>{status[invoice.status]}</span>
                                                                     </td>
                                                                     <td className="px-4 py-3 text-center">
                                                                         <Link

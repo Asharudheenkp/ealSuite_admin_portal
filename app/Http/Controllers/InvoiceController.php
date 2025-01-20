@@ -21,7 +21,8 @@ class InvoiceController extends Controller
     public function index()
     {
         return Inertia::render('Invoice/Index',[
-            'type' => InvoiceConstants::TYPE
+            'type' => InvoiceConstants::TYPE,
+            'status' => InvoiceConstants::STATUS,
         ]);
     }
 
