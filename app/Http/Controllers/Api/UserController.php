@@ -56,7 +56,7 @@ class UserController extends Controller
         $data = $this->userServices->validateRequest($request, $type);
 
         if ($data['status'] === false) {
-            return response()->json($data);
+            return response()->json($data, 422);
         }
 
         $model = $this->userServices->createData($data['validated'], $type);
@@ -80,7 +80,7 @@ class UserController extends Controller
         $data = $this->userServices->validateRequest($request, $type, $id);
 
         if ($data['status'] === false) {
-            return response()->json($data);
+            return response()->json($data,422);
         }
 
         $model = $this->userServices->updateData($data['validated'], $type, $id);

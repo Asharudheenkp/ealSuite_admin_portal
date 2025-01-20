@@ -3,22 +3,55 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, useForm } from "@inertiajs/react";
-import React from "react";
+import { Head, router } from "@inertiajs/react";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
-const create = ({ type }) => {
-    const { data, setData, post, processing, errors, reset } = useForm({
+const Create = ({ type }) => {
+    const [processing, setProcessing] = useState(false);
+
+    const [formData, setFormData] = useState({
         name: "",
         email: "",
         phone: "",
         address: "",
     });
 
+    const [errors, setErrors] = useState({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+    });
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
     const submit = (e) => {
         e.preventDefault();
-
-        post(route("api.create.data", type), {
-            onFinish: () => console.log('success')
+        setProcessing(true);
+        axios.get("/sanctum/csrf-cookie").then(() => {
+            axios
+                .post(route("api.create.data", type), formData)
+                .then(({ data }) => {
+                    setProcessing(false);
+                    const { status, message } = data;
+                    if (status) {
+                        toast.success(message);
+                        setTimeout(() => router.visit(route("customer")), 1500);
+                    } else {
+                        toast.error(message);
+                    }
+                })
+                .catch(({ response }) => {
+                    setProcessing(false);
+                    const { errors } = response.data || {};
+                    if (errors) {
+                        Object.entries(errors).forEach(([key, value]) => {
+                            setErrors({ ...errors, [key]: value.join(", ") });
+                        });
+                    }
+                });
         });
     };
 
@@ -43,13 +76,10 @@ const create = ({ type }) => {
                                     <TextInput
                                         id="name"
                                         name="name"
-                                        value={data.name}
+                                        value={formData.name}
                                         className="mt-1 block w-full"
                                         isFocused={true}
-                                        onChange={(e) =>
-                                            setData("name", e.target.value)
-                                        }
-                                        required
+                                        onChange={handleChange}
                                     />
 
                                     <InputError
@@ -65,12 +95,9 @@ const create = ({ type }) => {
                                         id="email"
                                         type="email"
                                         name="email"
-                                        value={data.email}
+                                        value={formData.email}
                                         className="mt-1 block w-full"
-                                        onChange={(e) =>
-                                            setData("email", e.target.value)
-                                        }
-                                        required
+                                        onChange={handleChange}
                                     />
 
                                     <InputError
@@ -86,12 +113,9 @@ const create = ({ type }) => {
                                         id="phone"
                                         type="text"
                                         name="phone"
-                                        value={data.phone}
+                                        value={formData.phone}
                                         className="mt-1 block w-full"
-                                        onChange={(e) =>
-                                            setData("phone", e.target.value)
-                                        }
-                                        required
+                                        onChange={handleChange}
                                     />
 
                                     <InputError
@@ -109,6 +133,8 @@ const create = ({ type }) => {
                                     <textarea
                                         name="address"
                                         id="address"
+                                        onChange={handleChange}
+                                        value={formData.address}
                                         className="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 mt-1 block w-full"
                                     ></textarea>
 
@@ -135,4 +161,4 @@ const create = ({ type }) => {
     );
 };
 
-export default create;
+export default Create;
