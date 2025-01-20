@@ -89,7 +89,7 @@ const Create = ({ type, status, customers }) => {
                                         onChange={handleChange}
                                     >
                                         <option value="">
-                                            Select a status
+                                            Select a customer
                                         </option>
                                         {customers.length > 0 && customers.map((customer) => (
                                             <option
