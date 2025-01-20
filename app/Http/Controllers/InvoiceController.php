@@ -48,10 +48,12 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
+        $customers = Customer::select('id', 'name')->get();
         return Inertia::render('Invoice/Edit', [
            'type' => InvoiceConstants::TYPE,
             'status' => InvoiceConstants::STATUS,
-            'customer' => $invoice
+            'invoice' => $invoice,
+            'customers' => $customers
         ]);
     }
 }
