@@ -4,6 +4,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Pagination from "@/Components/Pagination";
 import { Head, Link } from "@inertiajs/react";
 import Loader from "@/Components/Loader";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({ type }) {
     const [customers, setCustomers] = useState([]);
@@ -51,9 +52,10 @@ export default function Index({ type }) {
                                 </h1>
                                 <Link
                                     href={route("customer.create")}
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
                                 >
-                                    Create Customer
+                                    <PrimaryButton>
+                                        Create Customer
+                                    </PrimaryButton>
                                 </Link>
                             </div>
 
@@ -69,7 +71,7 @@ export default function Index({ type }) {
                                         ) : (
                                             <div className="overflow-x-auto">
                                                 <table className="table-auto w-full text-left border-collapse">
-                                                    <thead className="bg-blue-600 text-white">
+                                                    <thead className="bg-black text-white">
                                                         <tr>
                                                             <th className="px-4 py-3">
                                                                 #

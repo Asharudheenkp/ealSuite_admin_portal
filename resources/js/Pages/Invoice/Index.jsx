@@ -4,6 +4,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Pagination from "@/Components/Pagination";
 import { Head, Link } from "@inertiajs/react";
 import Loader from "@/Components/Loader";
+import PrimaryButton from "@/Components/PrimaryButton";
 
 export default function Index({ type }) {
     const [invoices, setInvoices] = useState([]);
@@ -51,9 +52,8 @@ export default function Index({ type }) {
                                 </h1>
                                 <Link
                                     href={route("invoice.create")}
-                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
                                 >
-                                    Create Invoice
+                                    <PrimaryButton>  Create Invoice</PrimaryButton>
                                 </Link>
                             </div>
 
@@ -69,7 +69,7 @@ export default function Index({ type }) {
                                         ) : (
                                             <div className="overflow-x-auto">
                                                 <table className="table-auto w-full text-left border-collapse">
-                                                    <thead className="bg-blue-600 text-white">
+                                                    <thead className="bg-black text-white">
                                                         <tr>
                                                             <th className="px-4 py-3">
                                                                 #
@@ -105,20 +105,20 @@ export default function Index({ type }) {
                                                                         {index + 1}
                                                                     </td>
                                                                     <td className="px-4 py-3 font-semibold text-gray-700">
-                                                                        { invoice.customer.name }
+                                                                        {invoice.customer.name}
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        { invoice.date }
+                                                                        {invoice.date}
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        { invoice.amount }
+                                                                        {invoice.amount}
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        { invoice.status }
+                                                                        {invoice.status}
                                                                     </td>
                                                                     <td className="px-4 py-3 text-center">
                                                                         <Link
-                                                                            href={ route("invoice.edit", invoice.id ) }
+                                                                            href={route("invoice.edit", invoice.id)}
                                                                             className="text-sm text-blue-500 hover:underline"
                                                                         >
                                                                             Edit
