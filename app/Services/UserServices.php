@@ -25,7 +25,7 @@ class UserServices
         if ($type == CustomerConstants::TYPE) {
             return Customer::withCount('invoices')->paginate($perPage);
         } elseif ($type == 'invoice') {
-            return Invoice::with('customer')->select('customer_id', 'date', 'amount', 'status')->paginate($perPage);
+            return Invoice::with('customer')->select('id', 'customer_id', 'date', 'amount', 'status')->paginate($perPage);
         } else {
             return null;
         }
@@ -71,7 +71,7 @@ class UserServices
             'invoice' => [
                 'customer_id' => 'required|exists:customers,id',
                 'date' => 'required|date',
-                'amount' => 'required|integer',
+                'amount' => 'required|numeric',
                 'status' => 'required'
             ]
         ];

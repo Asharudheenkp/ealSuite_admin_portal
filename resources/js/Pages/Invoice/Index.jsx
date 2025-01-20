@@ -6,17 +6,17 @@ import { Head, Link } from "@inertiajs/react";
 import Loader from "@/Components/Loader";
 
 export default function Index({ type }) {
-    const [customers, setCustomers] = useState([]);
+    const [invoices, setInvoices] = useState([]);
     const [paginationData, setPaginationData] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const getCustomers = (page = 1) => {
+    const getInvoices = (page = 1) => {
         setLoading(true);
         axios
             .post(route("api.get.data", type), { page })
             .then(({ data }) => {
                 setPaginationData(data.data);
-                setCustomers(data.data.data);
+                setInvoices(data.data.data);
             })
             .finally(() => {
                 setLoading(false);
@@ -24,22 +24,22 @@ export default function Index({ type }) {
     };
 
     useEffect(() => {
-        getCustomers();
+        getInvoices();
     }, []);
 
     const handlePageChange = (page) => {
-        getCustomers(page);
+        getInvoices(page);
     };
 
     return (
         <AuthenticatedLayout
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Customer
+                    Invoice
                 </h2>
             }
         >
-            <Head title="Customer" />
+            <Head title="Invoice" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -47,13 +47,13 @@ export default function Index({ type }) {
                         <div className="container mx-auto p-6 bg-gray-50">
                             <div className="flex items-center justify-between mb-6">
                                 <h1 className="text-3xl font-bold text-gray-800">
-                                    Customer List
+                                    Invoice List
                                 </h1>
                                 <Link
-                                    href={route("customer.create")}
+                                    href={route("invoice.create")}
                                     className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
                                 >
-                                    Create Customer
+                                    Create Invoice
                                 </Link>
                             </div>
 
@@ -62,9 +62,9 @@ export default function Index({ type }) {
                                     <Loader />
                                 ) : (
                                     <>
-                                        {customers.length === 0 ? (
+                                        {invoices.length === 0 ? (
                                             <div className="text-center py-12 text-lg text-gray-500">
-                                                No customers found.
+                                                No invoices found.
                                             </div>
                                         ) : (
                                             <div className="overflow-x-auto">
@@ -75,16 +75,16 @@ export default function Index({ type }) {
                                                                 #
                                                             </th>
                                                             <th className="px-4 py-3">
-                                                                Name
+                                                                Customer Name
                                                             </th>
                                                             <th className="px-4 py-3">
-                                                                Phone
+                                                                Date
                                                             </th>
                                                             <th className="px-4 py-3">
-                                                                Email
+                                                                Amount
                                                             </th>
                                                             <th className="px-4 py-3">
-                                                                Address
+                                                                Status
                                                             </th>
                                                             <th className="px-4 py-3 text-center">
                                                                 Actions
@@ -92,47 +92,33 @@ export default function Index({ type }) {
                                                         </tr>
                                                     </thead>
                                                     <tbody className="divide-y divide-gray-200">
-                                                        {customers.map(
+                                                        {invoices.map(
                                                             (
-                                                                customer,
+                                                                invoice,
                                                                 index
                                                             ) => (
                                                                 <tr
                                                                     className="hover:bg-gray-50"
-                                                                    key={
-                                                                        customer.id
-                                                                    }
+                                                                    key={invoice.id}
                                                                 >
                                                                     <td className="px-4 py-3">
-                                                                        {index +
-                                                                            1}
+                                                                        {index + 1}
                                                                     </td>
                                                                     <td className="px-4 py-3 font-semibold text-gray-700">
-                                                                        {
-                                                                            customer.name
-                                                                        }
+                                                                        { invoice.customer.name }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        {
-                                                                            customer.phone
-                                                                        }
+                                                                        { invoice.date }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        {
-                                                                            customer.email
-                                                                        }
+                                                                        { invoice.amount }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                        {
-                                                                            customer.address
-                                                                        }
+                                                                        { invoice.status }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-center">
                                                                         <Link
-                                                                            href={route(
-                                                                                "customer.edit",
-                                                                                customer.id
-                                                                            )}
+                                                                            href={ route("invoice.edit", invoice.id ) }
                                                                             className="text-sm text-blue-500 hover:underline"
                                                                         >
                                                                             Edit
@@ -147,7 +133,7 @@ export default function Index({ type }) {
                                         )}
                                     </>
                                 )}
-                                {customers.length > 0 && (
+                                {invoices.length > 0 && (
                                     <Pagination
                                         paginationData={paginationData}
                                         handlePageChange={handlePageChange}

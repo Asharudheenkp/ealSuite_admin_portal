@@ -22,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function() {
     Route::get('/customer/edit/{customer}', [CustomerController::class, 'edit'])->name('customer.edit');
 
     Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice');
+    Route::get('/invoice/create', [InvoiceController::class, 'create'])->name('invoice.create');
+    Route::get('/invoice/edit/{invoice}', [InvoiceController::class, 'edit'])->name('invoice.edit');
 });
 
 

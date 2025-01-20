@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->date('date');
             $table->decimal('amount', 10, 2);
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(0)->comment('0 => Unpaid | 1 => Paid | 2 => Cancelled');
             $table->timestamps();
         });
     }
