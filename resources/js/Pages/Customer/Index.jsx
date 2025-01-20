@@ -49,7 +49,10 @@ export default function Index({ type }) {
                                 <h1 className="text-3xl font-bold text-gray-800">
                                     Customer List
                                 </h1>
-                                <Link href={route('customer.create')} className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300">
+                                <Link
+                                    href={route("customer.create")}
+                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"
+                                >
                                     Create New Customer
                                 </Link>
                             </div>
@@ -125,7 +128,13 @@ export default function Index({ type }) {
                                                                         }
                                                                     </td>
                                                                     <td className="px-4 py-3 text-center">
-                                                                        <Link href={route('customer.edit', customer.id)} className="text-sm text-blue-500 hover:underline">
+                                                                        <Link
+                                                                            href={route(
+                                                                                "customer.edit",
+                                                                                customer.id
+                                                                            )}
+                                                                            className="text-sm text-blue-500 hover:underline"
+                                                                        >
                                                                             Edit
                                                                         </Link>
                                                                     </td>
@@ -138,11 +147,12 @@ export default function Index({ type }) {
                                         )}
                                     </>
                                 )}
-
-                                <Pagination
-                                    paginationData={paginationData}
-                                    handlePageChange={handlePageChange}
-                                />
+                                {customers.length > 0 && (
+                                    <Pagination
+                                        paginationData={paginationData}
+                                        handlePageChange={handlePageChange}
+                                    />
+                                )}
                             </div>
                         </div>
                     </div>
