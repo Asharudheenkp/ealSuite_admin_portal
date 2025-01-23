@@ -13,15 +13,18 @@ export default function Index({ type, status }) {
 
     const getInvoices = (page = 1) => {
         setLoading(true);
-        axios
-            .post(route("api.get.data", type), { page })
-            .then(({ data }) => {
-                setPaginationData(data.data);
-                setInvoices(data.data.data);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        axios.get("/sanctum/csrf-cookie").then(() => {
+            axios
+                .post(route("api.get.data", type), { page })
+                .then(({ data }) => {
+                    setPaginationData(data.data);
+                    setInvoices(data.data.data);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        });
+
     };
 
     useEffect(() => {
@@ -114,7 +117,7 @@ export default function Index({ type, status }) {
                                                                         {invoice.amount}
                                                                     </td>
                                                                     <td className="px-4 py-3 text-gray-600">
-                                                                       <span className={``}>{status[invoice.status]}</span>
+                                                                        <span className={``}>{status[invoice.status]}</span>
                                                                     </td>
                                                                     <td className="px-4 py-3 text-center">
                                                                         <Link

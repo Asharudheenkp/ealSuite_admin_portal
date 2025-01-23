@@ -13,15 +13,17 @@ export default function Index({ type }) {
 
     const getCustomers = (page = 1) => {
         setLoading(true);
-        axios
-            .post(route("api.get.data", type), { page })
-            .then(({ data }) => {
-                setPaginationData(data.data);
-                setCustomers(data.data.data);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        axios.get("/sanctum/csrf-cookie").then(() => {
+            axios
+                .post(route("api.get.data", type), { page })
+                .then(({ data }) => {
+                    setPaginationData(data.data);
+                    setCustomers(data.data.data);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        });
     };
 
     useEffect(() => {
